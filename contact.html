@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Contact Us | AV Production & Event Rentals</title>
+    <meta name="description"
+        content="Get in touch with AV Production for quotes, support, or inquiries. Contact us via our form, email, or phone for all your event production needs." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.yourwebsite.com/contact" />
+
+    <style>
+        :root {
+            --bg: #0b0e13;
+            --surface: #121720;
+            --muted: #1a2130;
+            --text: #e9eef7;
+            --sub: #b8c2d6;
+            --primary: #7ae1f8;
+            --accent: #9b7af8;
+            --radius: 14px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --header-height: 61px;
+        }
+        * { box-sizing: border-box }
+        html, body {
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding-top: var(--header-height);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+        a { color: inherit; text-decoration: none }
+        img, iframe { max-width: 100%; display: block }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            backdrop-filter: saturate(140%) blur(10px);
+            background: rgba(11, 14, 19, .8);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--primary));
+            box-shadow: 0 6px 18px rgba(122, 225, 248, .25), inset 0 0 30px rgba(155, 122, 248, .25);
+        }
+        .brand .brand-text { font-size: 16px; margin: 0; }
+        .menu a { padding: 8px 10px; color: var(--sub); transition: color .2s; }
+        .menu a:hover { color: var(--text); }
+        .menu-toggle { display: none; }
+
+        @media (max-width: 768px) {
+            /* Responsive header styles */
+        }
+
+        /* Contact Page Styles */
+        .contact-wrapper {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        @media (max-width: 900px) {
+            .contact-wrapper { grid-template-columns: 1fr; }
+        }
+
+        .contact-form h1 {
+            font-size: clamp(28px, 4vw, 42px);
+            margin: 0 0 10px 0;
+        }
+        .contact-form p {
+            color: var(--sub);
+            margin: 0 0 30px 0;
+            max-width: 55ch;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--sub);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: var(--surface);
+            border: 1px solid var(--muted);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        
+        .submit-btn {
+            padding: 14px 24px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 8px;
+            color: #071018;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            transition: opacity .2s;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+
+        .contact-info {
+            background: var(--surface);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--muted);
+        }
+        .contact-info h2 {
+            font-size: 24px;
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid var(--muted);
+            padding-bottom: 15px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: var(--sub);
+        }
+        .info-item a { transition: color .2s; }
+        .info-item a:hover { color: var(--primary); }
+        .map-container {
+            margin-top: 30px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--muted);
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 250px;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav" aria-label="Main">
+            <a href="index.html" class="brand">
+                <div class="brand-badge" aria-hidden="true"></div>
+                <p class="brand-text">AV Production</p>
+            </a>
+            <div class="menu" id="main-menu">
+                <a href="index.html#services">Services</a>
+                <a href="index.html#portfolio">Work</a>
+                <a href="index.html#stats">Stats</a>
+                <a href="index.html#testimonials">Clients</a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="contact-wrapper">
+            <section class="contact-form" aria-labelledby="contact-heading">
+                <h1 id="contact-heading">Contact Us</h1>
+                <p>Have a question or ready to start your project? Fill out the form below, and our team will get back to you within 24 hours.</p>
+                <form action="#" method="POST" aria-label="Contact Form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </section>
+
+            <aside class="contact-info" aria-label="Contact Information">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <span>📧</span>
+                    <a href="mailto:contact@avproduction.com">contact@avproduction.com</a>
+                </div>
+                <div class="info-item">
+                    <span>📞</span>
+                    <a href="tel:+97141234567">+971 4 123 4567</a>
+                </div>
+                <address class="info-item">
+                    <span>📍</span>
+                    <p style="margin:0;">Dubai Media City, Building 8<br>Dubai, UAE</p>
+                </address>
+                <div class="info-item">
+                    <span>🕒</span>
+                    <p style="margin:0;"><strong>Hours:</strong> Sun - Thu, 9:00 AM - 6:00 PM</p>
+                </div>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3613.823619559381!2d55.15286561500731!3d25.07390998395353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f6b4a3fe4a929%3A0x86c9c64c39c44754!2sDubai%20Media%20City!5e0!3m2!1sen!2sae!4v1668852654321!5m2!1sen!2sae" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Office Location Map">
+                    </iframe>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- You can include the same footer as your main page if desired -->
+
+</body>
+</html>
