@@ -1,16 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>SA Events</title>
     <meta name="description"
         content="Full-service event production: staging, LED, lighting, audio, rigging, and post-production." />
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css">
+     -->
 
 
+    <style>
+        :root {
+            /* New Vibrant Color Palette */
+            --bg: #100f1c;
+            --surface: #1d1b2f;
+            --muted: #2a2845;
+            --text: #f0eefc;
+            --sub: #aca8cb;
+            --primary: #ffc700;
+            /* Gold */
+            --accent: #ff007f;
+            /* Magenta */
+            --ok: #00f5a0;
+            --warn: #ffc700;
+            --danger: #ff5959;
+
+
+            --radius: 14px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --ring: 0 0 0 3px rgba(255, 199, 0, .45);
+            --header-height: 61px;
+        }
+
+
+        * {
+            box-sizing: border-box
+        }
+
+
+        html,
+        body {
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            padding-top: var(--header-height);
+            /* Prevent content from hiding behind fixed header */
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Arial, sans-serif;
+            color: var(--text);
+            /* Updated background gradients */
+            background: radial-gradient(1200px 600px at 10% -10%, rgba(255, 199, 0, .12), transparent 50%),
+                radial-gradient(900px 500px at 90% -20%, rgba(255, 0, 127, .12), transparent 50%),
+                var(--bg);
+            background-attachment: fixed;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+
+        /* Keyframes for the scroll-linked progress bar animation */
+        @keyframes grow-progress {
+            from {
+                transform: scaleX(0);
+            }
+
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+
+        /* Top progress bar, now driven by CSS animation timeline */
+        .progress {
+            position: fixed;
+            inset: 0 0 auto 0;
+            height: 3px;
+            z-index: 9999;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform-origin: left center;
+            /* Link the animation to the document's scroll progress */
+            animation: grow-progress auto linear;
+            animation-timeline: scroll(root block);
+        }
+
+
+        header {
+            position: fixed;
+            /* Always fixed at the top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            backdrop-filter: saturate(140%) blur(10px);
+            background: rgba(16, 15, 28, .6);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: space-between;
+        }
+
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1;
+        }
+
+
+        .brand-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--primary));
+            box-shadow: 0 6px 18px rgba(255, 199, 0, .25), inset 0 0 30px rgba(255, 0, 127, .25);
+        }
+
+
+        .brand h1 {
+            font-size: 16px;
+            margin: 0;
+            color: var(--text);
+            letter-spacing: .3px
+        }
+
+
+        /* Desktop Menu Styles */
+        .menu {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+
+        .menu a {
+            position: relative;
+            padding: 8px 10px;
+            color: var(--sub);
+        }
+
+
+        .menu a::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .25s ease;
+        }
+
+
+        .menu a:hover,
+        .menu a:focus {
+            color: var(--text)
+        }
+
+
+        .menu a:hover::after,
+        .menu a:focus::after {
+            transform: scaleX(1)
+        }
+
+
+        /* Hide mobile toggle by default on large screens */
+        .menu-toggle {
+            display: none;
+        }
+
+
+        /* Responsive Header Styles */
+        @media (max-width: 768px) {
+            .nav {
+                justify-content: space-between;
+            }
+
+
+            .brand {
+                order: 1;
+            }
+
+
+            .menu {
+                display: none;
+                /* Hide on mobile by default */
+                position: fixed;
+                inset: var(--header-height) 0 0 0;
+                background: rgba(16, 15, 28, .95);
+                backdrop-filter: blur(10px);
+                height: calc(100vh - var(--header-height));
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                gap: 24px;
+                order: 3;
+            }
+
+
+            .menu.is-active {
+                display: flex;
+                /* Show when toggled */
+            }
+
+
+            .menu-toggle {
+                display: flex;
+                /* Show on mobile */
+                order: 2;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 28px;
+                height: 28px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                z-index: 60;
+            }
+
+
+            .menu-toggle span {
+                width: 100%;
+                height: 3px;
+                background: var(--primary);
+                border-radius: 3px;
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+                position: relative;
+                transform-origin: center;
+            }
+
+
+            .menu-toggle.is-active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+
+            .menu-toggle.is-active span:nth-child(2) {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+
+            .menu-toggle.is-active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+
+        @media (max-width:900px) {
+            .hero {
+                grid-template-columns: 1fr
+            }
+        }
+
+
+        .kicker {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 199, 0, .10);
+            color: var(--primary);
+            font-size: 13px;
+            border: 1px solid rgba(255, 199, 0, .25)
+        }
+
+
+        .title {
+            font-size: clamp(28px, 4.5vw, 56px);
+            line-height: 1.05;
+            margin: 12px 0 10px;
+            letter-spacing: .2px;
+        }
+
+
+        .title .accent {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+
+        .lead {
+            color: var(--sub);
+            max-width: 60ch
+        }
+
+
+        .cta {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap
+        }
+
+
+        .btn {
+            position: relative;
+            isolation: isolate;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+            color: var(--text);
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            transition: transform .15s ease, box-shadow .2s ease;
+            box-shadow: var(--shadow);
+            will-change: transform;
+        }
+
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+
+        .btn:active {
+            transform: translateY(0)
+        }
+
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-color: transparent;
+            color: #071018
+        }
+
+
+        .btn .ripple {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            overflow: hidden;
+            pointer-events: none
+        }
+
+
+        .btn .ripple span {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .35);
+            transform: translate(-50%, -50%) scale(1);
+            animation: ripple .6s ease-out forwards
+        }
+
+
+        @keyframes ripple {
+            to {
+                transform: translate(-50%, -50%) scale(14);
+                opacity: 0
+            }
+        }
+
+
+        .hero-visual {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: linear-gradient(140deg, #1d1b2f, #100f1c);
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: var(--shadow)
+        }
+
+
+        .grid {
+            position: absolute;
+            inset: -20% -20% -20% -20%;
+            background-image:
+                radial-gradient(1px 1px at 20px 20px, rgba(255, 199, 0, .45) 60%, transparent 61%),
+                radial-gradient(1px 1px at 60px 60px, rgba(255, 0, 127, .35) 60%, transparent 61%);
+            background-size: 80px 80px;
+            opacity: .25;
+            transform: translateZ(0);
+        }
+
+
+        .panel {
+            position: absolute;
+            inset: 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 199, 0, .10), transparent 40%),
+                linear-gradient(0deg, rgba(255, 0, 127, .10), transparent 40%);
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px
+        }
+
+
+        .section-title {
+            font-size: 28px;
+            margin: 0 0 16px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+
+        .section-sub {
+            color: var(--sub);
+            margin: 0 0 24px
+        }
+
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px
+        }
+
+
+        .card {
+            grid-column: span 4;
+            min-height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, .08);
+            padding: 18px;
+            position: relative;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: opacity .5s ease, transform .5s ease;
+            will-change: transform, opacity;
+        }
+
+
+        @media (max-width:900px) {
+            .card {
+                grid-column: span 6
+            }
+        }
+
+
+        @media (max-width:600px) {
+            .card {
+                grid-column: span 12
+            }
+        }
+
+
+        .card.in-view {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+
+        .card:hover {
+            outline: 1px solid rgba(255, 199, 0, .25)
+        }
+
+
+        .card h3 {
+            margin: 4px 0 8px;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+
+        .card p {
+            margin: 0;
+            color: var(--sub)
+        }
+
+
+        .chip {
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 199, 0, .10);
+            color: var(--primary);
+            border: 1px solid rgba(255, 199, 0, .25);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 12px
+        }
+
+
+        .portfolio {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px
+        }
+
+
+        .tile {
+            grid-column: span 6;
+            aspect-ratio: 16/10;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #1d1b2f, #100f1c);
+            border: 1px solid rgba(255, 255, 255, .06);
+            box-shadow: var(--shadow);
+            transform: translateY(12px);
+            opacity: 0;
+            transition: opacity .5s ease, transform .5s ease;
+            will-change: transform, opacity;
+        }
+
+
+        .tile.in-view {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+
+        @media (max-width:800px) {
+            .tile {
+                grid-column: span 12
+            }
+        }
+
+
+        .tile .meta {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, .35);
+            backdrop-filter: blur(6px);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px
+        }
+
+
+        @media (max-width:800px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+
+        .stat {
+            padding: 18px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: center
+        }
+
+
+        .stat .num {
+            font-size: 36px;
+            letter-spacing: .5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+
+        .stat .lbl {
+            color: var(--sub)
+        }
+
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px
+        }
+
+
+        .quote {
+            grid-column: span 6;
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: var(--surface);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: opacity .5s ease, transform .5s ease;
+            will-change: transform, opacity;
+        }
+
+
+        .quote.in-view {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+
+        @media (max-width:900px) {
+            .quote {
+                grid-column: span 12
+            }
+        }
+
+
+        .contact {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(255, 199, 0, .12), rgba(255, 0, 127, .12));
+            border: 1px solid rgba(255, 255, 255, .08);
+            padding: 20px;
+            border-radius: 14px
+        }
+
+
+        footer {
+            color: var(--sub);
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            background: rgba(0, 0, 0, .25)
+        }
+
+
+        .foot {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px
+        }
+
+
+        /* Accessibility and motion preferences */
+        :focus-visible {
+            outline: none;
+            box-shadow: var(--ring)
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .001ms !important
+            }
+        }
+    </style>
 </head>
+
 
 <body>
     <div class="progress" aria-hidden="true"></div>
@@ -35,6 +726,7 @@
         </nav>
     </header>
 
+
     <main>
         <section class="hero">
             <div>
@@ -43,6 +735,7 @@
                 <p class="lead">Staging, LED, lighting, audio, rigging, and post‑production handled by a single
                     integrated team focused on reliability and polish.</p>
                 <div class="cta">
+
 
                     <a class="btn btn-primary" href="#portfolio" data-magnetic>
                         <span>See our work</span>
@@ -57,6 +750,7 @@
             </div>
         </section>
 
+
         <section id="services">
             <h3 class="section-title">Services</h3>
             <p class="section-sub">End‑to‑end technical production with best‑in‑class inventory and specialists.</p>
@@ -67,7 +761,9 @@
                     <p>Load‑safe builds, choreography‑ready layouts, and secure rigging plans.</p>
                 </article>
                 <article class="card reveal">
-                    <span class="chip">LED & Projection</span>
+                    <span class="chip"
+                        style="background: rgba(255,0,127,.1); color: var(--accent); border-color: rgba(255,0,127,.25)">LED
+                        & Projection</span>
                     <h3>LED walls & mapped video</h3>
                     <p>High‑brightness LED, projection mapping, and fine‑pitch displays.</p>
                 </article>
@@ -77,7 +773,8 @@
                     <p>Key, fill, and effects programming aligned to show cues.</p>
                 </article>
                 <article class="card reveal">
-                    <span class="chip">Audio</span>
+                    <span class="chip"
+                        style="background: rgba(255,0,127,.1); color: var(--accent); border-color: rgba(255,0,127,.25)">Audio</span>
                     <h3>Rider‑ready sound</h3>
                     <p>Tuned arrays, clear speech, and musicality at any scale.</p>
                 </article>
@@ -87,12 +784,15 @@
                     <p>Multicam capture, editorial, color, and deliverables on time.</p>
                 </article>
                 <article class="card reveal">
-                    <span class="chip">Crew & Ops</span>
+                    <span class="chip"
+                        style="background: rgba(255,0,127,.1); color: var(--accent); border-color: rgba(255,0,127,.25)">Crew
+                        & Ops</span>
                     <h3>Operators & techs</h3>
                     <p>Experienced show callers, engineers, and logistics support.</p>
                 </article>
             </div>
         </section>
+
 
         <section id="portfolio">
             <h3 class="section-title">Selected work</h3>
@@ -102,6 +802,7 @@
                     <img src="images/conference.jpg" alt="Main stage of a large conference with 3,000 attendees."
                         loading="lazy" style="width:100%; height:100%; object-fit: cover;" />
                     <figcaption class="meta"><strong>Conference</strong><span>3K attendees</span></figcaption>
+
 
                 </figure>
                 <figure class="tile reveal">
@@ -116,6 +817,7 @@
                         loading="lazy" style="width:100%; height:100%; object-fit: cover;" />
                     <figcaption class="meta"><strong>Awards Night</strong><span>Lighting design</span></figcaption>
 
+
                 </figure>
                 <figure class="tile reveal">
                     <img src="images/festival.jpg"
@@ -123,9 +825,11 @@
                         loading="lazy" style="width:100%; height:100%; object-fit: cover;" />
                     <figcaption class="meta"><strong>Festival Stage</strong><span>Audio arrays</span></figcaption>
 
+
                 </figure>
             </div>
         </section>
+
 
         <section id="stats">
             <h3 class="section-title">By the numbers</h3>
@@ -150,6 +854,7 @@
             </div>
         </section>
 
+
         <section id="testimonials">
             <h3 class="section-title">Testimonials</h3>
             <p class="section-sub">Feedback from partners and clients.</p>
@@ -159,10 +864,11 @@
             </div>
         </section>
 
+
         <section id="contact">
             <div class="contact">
                 <div>
-                    <h3 style="margin:0 0 6px">Let’s plan your show</h3>
+                    <h3 style="margin:0 0 6px; color: var(--text);">Let’s plan your show</h3>
                     <p style="margin:0;color:var(--sub)">Share dates, venue, and scope for a fast estimate.</p>
                 </div>
                 <div class="cta">
@@ -170,10 +876,12 @@
                         <div class="ripple" aria-hidden="true"></div>
                     </a>
 
+
                 </div>
             </div>
         </section>
     </main>
+
 
     <footer>
         <div class="foot">
@@ -182,7 +890,164 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+
+    <!-- <script src="script.js"></script> -->
+
+
+    <script>document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainMenu = document.querySelector('#main-menu');
+
+
+            // --- Responsive Menu Toggle & Close on Link Click ---
+            if (menuToggle && mainMenu) {
+                // Toggle menu with button
+                menuToggle.addEventListener('click', () => {
+                    const isActive = mainMenu.classList.toggle('is-active');
+                    menuToggle.classList.toggle('is-active');
+                    menuToggle.setAttribute('aria-expanded', isActive);
+                    // Prevent body scroll when menu is open
+                    document.body.style.overflow = isActive ? 'hidden' : '';
+                });
+
+
+                // Close menu when a link is clicked
+                mainMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainMenu.classList.contains('is-active')) {
+                            menuToggle.classList.remove('is-active');
+                            mainMenu.classList.remove('is-active');
+                            document.body.style.overflow = '';
+                            menuToggle.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+
+
+            // --- Other existing scripts ---
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+            // --- REMOVED: JS-based progress bar logic ---
+            // The scroll progress bar is now handled entirely by CSS for better performance.
+
+
+            const revealEls = document.querySelectorAll('.reveal');
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('in-view');
+                        [...e.target.parentElement.children].forEach((s, i) => {
+                            s.style.transitionDelay = (i * 60) + 'ms';
+                        });
+                        io.unobserve(e.target);
+                    }
+                })
+            }, { threshold: .15 });
+            revealEls.forEach(el => io.observe(el));
+
+
+            const nums = document.querySelectorAll('[data-count-to]');
+            const countIo = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        const el = e.target; const to = +el.dataset.countTo;
+                        const dur = prefersReduced ? 0 : 900;
+                        const start = performance.now();
+                        const from = 0;
+                        const step = (t) => {
+                            const p = Math.min(1, (t - start) / dur);
+                            const v = Math.round(from + (to - from) * p);
+                            el.textContent = v.toLocaleString();
+                            if (p < 1) requestAnimationFrame(step);
+                        };
+                        requestAnimationFrame(step);
+                        countIo.unobserve(el);
+                    }
+                })
+            }, { threshold: .35 });
+            nums.forEach(n => countIo.observe(n));
+
+
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const wrap = btn.querySelector('.ripple');
+                    if (!wrap) return;
+                    const s = document.createElement('span');
+                    const rect = btn.getBoundingClientRect();
+                    s.style.left = (e.clientX - rect.left) + 'px';
+                    s.style.top = (e.clientY - rect.top) + 'px';
+                    wrap.appendChild(s);
+                    setTimeout(() => s.remove(), 600);
+                });
+            });
+
+
+            const lerp = (a, b, n) => a + (b - a) * n;
+            document.querySelectorAll('[data-magnetic]').forEach(el => {
+                let tx = 0, ty = 0, rx = 0, ry = 0;
+                const inner = el.querySelector('span');
+                if (!inner || prefersReduced) return;
+                const follow = () => {
+                    inner.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+                    requestAnimationFrame(follow);
+                };
+                follow();
+                el.addEventListener('mousemove', (e) => {
+                    const r = el.getBoundingClientRect();
+                    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+                    const dx = (e.clientX - cx) / (r.width / 2);
+                    const dy = (e.clientY - cy) / (r.height / 2);
+                    rx = dx * 6; ry = dy * 6;
+                    tx = lerp(tx, rx, .25);
+                    ty = lerp(ty, ry, .25);
+                });
+                el.addEventListener('mouseleave', () => {
+                    rx = ry = 0;
+                    const reset = () => {
+                        tx = lerp(tx, 0, .2);
+                        ty = lerp(ty, 0, .2);
+                        if (Math.abs(tx) > 0.5 || Math.abs(ty) > 0.5) requestAnimationFrame(reset);
+                        else { tx = ty = 0; inner.style.transform = 'translate(0,0)'; }
+                    };
+                    reset();
+                });
+            });
+
+
+            // --- Hero Parallax for Mouse and Touch ---
+            const hv = document.getElementById('heroVisual');
+            if (hv && !prefersReduced) {
+                let px = 0, py = 0, tx = 0, ty = 0;
+                const animateHero = () => {
+                    tx = lerp(tx, px, .1); ty = lerp(ty, py, .1);
+                    hv.style.transform = 'perspective(900px) rotateX(' + (-ty * 2) + 'deg) rotateY(' + (tx * 2) + 'deg)';
+                    requestAnimationFrame(animateHero);
+                };
+                animateHero();
+
+
+                const updatePosition = (e) => {
+                    const r = hv.getBoundingClientRect();
+                    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+
+
+                    // Use touch coordinates if available, otherwise use pointer coordinates
+                    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+
+                    px = (clientX - cx) / (r.width / 2);
+                    py = (clientY - cy) / (r.height / 2);
+                }
+
+
+                window.addEventListener('pointermove', updatePosition, { passive: true });
+                window.addEventListener('touchmove', updatePosition, { passive: true });
+            }
+        });</script>
 </body>
+
 
 </html>
