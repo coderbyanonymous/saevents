@@ -6,30 +6,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <!-- SEO Meta Tags -->
-    <title>Contact Us | AV Production & Event Rentals</title>
+    <title>Contact Us | Trio Pixel Event</title>
     <meta name="description"
-        content="Get in touch with AV Production for quotes, support, or inquiries. Contact us via our form, email, or phone for all your event production needs." />
+        content="Get in touch with Trio Pixel Event for quotes, support, or inquiries. Contact us via our form, email, or phone for all your event production needs." />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.yourwebsite.com/contact" />
 
     <style>
         :root {
-            /* Vibrant palette to match index */
-            --bg: #100f1c;
-            --surface: #1d1b2f;
-            --muted: #2a2845;
-            --text: #f0eefc;
-            --sub: #aca8cb;
-            --primary: #ffc700;
-            /* gold */
-            --accent: #ff007f;
-            /* magenta */
-            --radius: 14px;
-            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-            --header-height: 61px;
+            /* Neutrals */
+            --bg-rgb: 12, 10, 22;
+            --surface-rgb: 26, 24, 44;
+            --text-rgb: 246, 244, 255;
+            --sub-rgb: 188, 184, 220;
 
-            /* Focus ring tuned for visibility */
-            --ring: 0 0 0 3px rgba(255, 199, 0, .45);
+            /* Logo colors only */
+            --brand-green-rgb: 114, 191, 70;
+            --brand-teal-rgb: 34, 145, 125;
+            --brand-pink-rgb: 220, 40, 120;
+            --brand-blue-rgb: 30, 90, 170;
+
+            /* Aliases (for consistency with index) */
+            --primary-rgb: var(--brand-green-rgb);
+            --accent-rgb: var(--brand-pink-rgb);
+
+            --radius: 14px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .38);
+            --ring: 0 0 0 3px rgba(var(--primary-rgb), .55);
+            --header-height: 61px;
         }
 
         /* Base */
@@ -47,12 +51,12 @@
             margin: 0;
             padding-top: var(--header-height);
             font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Ubuntu, Arial, sans-serif;
-            color: var(--text);
-            /* Match index: subtle dual radial glow + deep bg */
+            color: rgb(var(--text-rgb));
+            /* Brand-only dual glow */
             background:
-                radial-gradient(1200px 600px at 10% -10%, rgba(255, 199, 0, .12), transparent 50%),
-                radial-gradient(900px 500px at 90% -20%, rgba(255, 0, 127, .12), transparent 50%),
-                var(--bg);
+                radial-gradient(1200px 600px at 10% -10%, rgba(var(--brand-green-rgb), .16), transparent 55%),
+                radial-gradient(900px 500px at 90% -20%, rgba(var(--brand-pink-rgb), .16), transparent 55%),
+                rgb(var(--bg-rgb));
             background-attachment: fixed;
         }
 
@@ -75,7 +79,7 @@
             width: 100%;
             z-index: 50;
             backdrop-filter: saturate(140%) blur(10px);
-            background: rgba(16, 15, 28, .6);
+            background: rgba(12, 10, 22, .6);
             border-bottom: 1px solid rgba(255, 255, 255, .06);
         }
 
@@ -99,8 +103,13 @@
             width: 36px;
             height: 36px;
             border-radius: 10px;
-            background: conic-gradient(from 0deg, var(--primary), var(--accent), var(--primary));
-            box-shadow: 0 6px 18px rgba(255, 199, 0, .25), inset 0 0 30px rgba(255, 0, 127, .25);
+            background: conic-gradient(from 0deg,
+                    rgb(var(--brand-green-rgb)),
+                    rgb(var(--brand-teal-rgb)),
+                    rgb(var(--brand-blue-rgb)),
+                    rgb(var(--brand-pink-rgb)),
+                    rgb(var(--brand-green-rgb)));
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .25), inset 0 0 30px rgba(0, 0, 0, .12);
         }
 
         .brand .brand-text {
@@ -112,12 +121,12 @@
         .menu a {
             position: relative;
             padding: 8px 10px;
-            color: var(--sub);
+            color: rgb(var(--sub-rgb));
             transition: color .2s ease;
         }
 
         .menu a:hover {
-            color: var(--text)
+            color: rgb(var(--text-rgb))
         }
 
         .menu a::after {
@@ -127,7 +136,11 @@
             right: 10px;
             bottom: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            background: linear-gradient(90deg,
+                    rgb(var(--brand-green-rgb)),
+                    rgb(var(--brand-teal-rgb)),
+                    rgb(var(--brand-blue-rgb)),
+                    rgb(var(--brand-pink-rgb)));
             transform: scaleX(0);
             transform-origin: left;
             transition: transform .25s ease;
@@ -142,7 +155,7 @@
         }
 
         @media (max-width: 768px) {
-            /* You can replicate your index mobile menu if needed */
+            /* Optional: replicate your index mobile menu interactions */
         }
 
         /* Layout */
@@ -166,22 +179,25 @@
         .contact-form h1 {
             font-size: clamp(28px, 4vw, 42px);
             margin: 0 0 10px 0;
-            /* Gradient ink like index titles */
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            background: linear-gradient(90deg,
+                    rgb(var(--brand-green-rgb)),
+                    rgb(var(--brand-teal-rgb)),
+                    rgb(var(--brand-blue-rgb)),
+                    rgb(var(--brand-pink-rgb)));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
         .contact-form p {
-            color: var(--sub);
+            color: rgb(var(--sub-rgb));
             margin: 0 0 30px 0;
-            max-width: 55ch;
+            max-width: 55ch
         }
 
         /* Card-esque side panel */
         .contact-info {
-            background: var(--surface);
+            background: rgb(var(--surface-rgb));
             padding: 30px;
             border-radius: var(--radius);
             border: 1px solid rgba(255, 255, 255, .08);
@@ -193,7 +209,11 @@
             margin: 0 0 20px 0;
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, .08);
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            background: linear-gradient(90deg,
+                    rgb(var(--brand-green-rgb)),
+                    rgb(var(--brand-teal-rgb)),
+                    rgb(var(--brand-blue-rgb)),
+                    rgb(var(--brand-pink-rgb)));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -204,7 +224,7 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
-            color: var(--sub);
+            color: rgb(var(--sub-rgb))
         }
 
         .info-item a {
@@ -212,7 +232,7 @@
         }
 
         .info-item a:hover {
-            color: var(--primary)
+            color: rgb(var(--brand-green-rgb))
         }
 
         .map-container {
@@ -230,6 +250,16 @@
         }
 
         /* Form */
+        .contact-form {
+            background: linear-gradient(135deg,
+                    rgba(var(--brand-teal-rgb), .12),
+                    rgba(var(--brand-blue-rgb), .12));
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
         .form-group {
             margin-bottom: 20px
         }
@@ -238,7 +268,7 @@
             display: block;
             margin-bottom: 8px;
             font-size: 14px;
-            color: var(--sub);
+            color: rgb(var(--sub-rgb));
         }
 
         .form-group input,
@@ -248,7 +278,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, .10);
             background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
-            color: var(--text);
+            color: rgb(var(--text-rgb));
             font-size: 16px;
             outline: none;
             transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
@@ -265,7 +295,7 @@
             box-shadow: var(--ring)
         }
 
-        /* Button styled like index .btn-primary */
+        /* Button styled with brand gradient */
         .submit-btn {
             padding: 12px 18px;
             border: 1px solid transparent;
@@ -274,7 +304,11 @@
             font-weight: 600;
             font-size: 16px;
             color: #071018;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
+            background: linear-gradient(90deg,
+                    rgb(var(--brand-green-rgb)),
+                    rgb(var(--brand-teal-rgb)),
+                    rgb(var(--brand-blue-rgb)),
+                    rgb(var(--brand-pink-rgb)));
             box-shadow: var(--shadow);
             transition: transform .15s ease, opacity .2s ease;
         }
@@ -288,21 +322,13 @@
             transform: translateY(0)
         }
 
-        /* Subtle container treatment similar to index contact strip */
-        .contact-form {
-            background: linear-gradient(135deg, rgba(255, 199, 0, .10), rgba(255, 0, 127, .10));
-            border: 1px solid rgba(255, 255, 255, .08);
-            border-radius: var(--radius);
-            padding: 24px;
-            box-shadow: var(--shadow);
-        }
-
         /* Focus visibility */
         :focus-visible {
             outline: none;
             box-shadow: var(--ring)
         }
 
+        /* WhatsApp FAB (brand guideline keeps WhatsApp green) */
         .whatsapp-float {
             position: fixed;
             right: 18px;
@@ -335,16 +361,33 @@
                 transition-duration: .001ms !important;
             }
         }
+
+        .brand-logo {
+            display: block;
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .35));
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo {
+                height: 30px;
+            }
+        }
+
+        /* Remove old badge/text spacing if present */
+        .brand {
+            gap: 10px;
+        }
     </style>
 </head>
 
 <body>
-
     <header>
         <nav class="nav" aria-label="Main">
-            <a href="index.html" class="brand">
-                <div class="brand-badge" aria-hidden="true"></div>
-                <p class="brand-text">AV Production</p>
+            <a href="index.html" class="brand" aria-label="Trio Pixel Event home">
+                <img src="images/logo.png" alt="Trio Pixel Event" class="brand-logo" width="148" height="40" />
             </a>
             <div class="menu" id="main-menu">
                 <a href="index.html#services">Services</a>
@@ -353,9 +396,7 @@
                 <a href="index.html#testimonials">Clients</a>
             </div>
             <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-menu">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
@@ -391,7 +432,7 @@
                 <h2>Contact Information</h2>
                 <div class="info-item">
                     <span>📧</span>
-                    <a href="mailto:contact@avproduction.com">contact@avproduction.com</a>
+                    <a href="mailto:contact@triopixel.com">contact@triopixel.com</a>
                 </div>
                 <div class="info-item">
                     <span>📞</span>
@@ -416,16 +457,8 @@
         </div>
     </main>
 
-    <!-- You can include the same footer as your main page if desired -->
     <a href="https://wa.me/971501234567?text=Hello%20AV%20Production%2C%20I%27d%20like%20to%20discuss%20an%20event."
         class="whatsapp-float" aria-label="Chat on WhatsApp" rel="noopener" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 16 16" fill="currentColor"
             aria-hidden="true">
-            <path
-                d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
-        </svg>
-    </a>
-
-</body>
-
-</html>
+            <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338
